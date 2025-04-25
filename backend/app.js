@@ -74,10 +74,24 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 
 function classifyEstonianTrash(labels) {
   for (const label of labels) {
+    // Check confidence threshold
+    if (label.Confidence < 70) continue;
+
+    // Check main label name
     if (estonianWasteTypes[label.Name]) {
       return estonianWasteTypes[label.Name];
     }
-    // Try parent label mapping
+
+    // Check aliases
+    if (label.Aliases) {
+      for (const alias of label.Aliases) {
+        if (estonianWasteTypes[alias.Name]) {
+          return estonianWasteTypes[alias.Name];
+        }
+      }
+    }
+
+    // Check parent labels
     if (label.Parents) {
       for (const parent of label.Parents) {
         if (estonianWasteTypes[parent.Name]) {
@@ -86,7 +100,9 @@ function classifyEstonianTrash(labels) {
       }
     }
   }
-  return "Segajäätmed"; // Default to mixed waste if no match
+
+  // Default to mixed waste if no match found
+  return "Segajäätmed";
 }
 
 const PORT = process.env.PORT || 3000;
