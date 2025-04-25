@@ -7,8 +7,9 @@ import multer from "multer";
 import fs from "fs";
 import dotenv from "dotenv"; 
 
+import estonianWasteTypes from "./estonian-wastes.js";
+
 dotenv.config(); 
-console.log(process.env.AWS_REGION);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +19,13 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.json());
 
-const upload = multer({ dest: "uploads/" });
+// Create uploads directory if it doesn't exist
+const uploadsDir = 'uploads';
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir);
+}
+
+const upload = multer({ dest: uploadsDir });
 
 const client = new RekognitionClient({
   region: process.env.AWS_REGION,
@@ -42,14 +49,23 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     });
     const { Labels } = await client.send(command);
 
-    await fs.promises.unlink(req.file.path);
+    // Only try to delete the file if it exists
+    try {
+      await fs.promises.unlink(req.file.path);
+    } catch (unlinkError) {
+      console.warn('Failed to delete uploaded file:', unlinkError.message);
+    }
 
     const estonianTrashType = classifyEstonianTrash(Labels);
 
     res.json({ estonianTrashType });
   } catch (err) {
     if (req.file) {
-      await fs.promises.unlink(req.file.path);
+      try {
+        await fs.promises.unlink(req.file.path);
+      } catch (unlinkError) {
+        console.warn('Failed to delete uploaded file:', unlinkError.message);
+      }
     }
     console.error("Error:", err);
     res.status(500).json({ error: err.message });
@@ -57,35 +73,17 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 });
 
 function classifyEstonianTrash(labels) {
-  // Mapping Rekognition label names to Estonian waste types
-  const mapping = {
-    "Plastic": "Plastik",
-    "Bottle": "Plastik",
-    "Water Bottle": "Plastik",
-    "Cup": "Plastik",
-    "Bag": "Plastik",
-    "Paper": "Paber ja kartong",
-    "Cardboard": "Paber ja kartong",
-    "Newspaper": "Paber ja kartong",
-    "Food": "Biojäätmed",
-    "Fruit": "Biojäätmed",
-    "Vegetable": "Biojäätmed",
-    "Glass": "Klaas",
-    "Jar": "Klaas",
-    "Metal": "Metall",
-    "Can": "Metall",
-    "Tin": "Metall",
-    "Electronics": "Elektroonika",
-    "Battery": "Ohtlikud jäätmed",
-    "Light Bulb": "Ohtlikud jäätmed",
-    "Packaging": "Pakend",
-    // Add more mappings as needed
-  };
-
-  // Find the first matching Estonian waste type
   for (const label of labels) {
-    if (mapping[label.Name]) {
-      return mapping[label.Name];
+    if (estonianWasteTypes[label.Name]) {
+      return estonianWasteTypes[label.Name];
+    }
+    // Try parent label mapping
+    if (label.Parents) {
+      for (const parent of label.Parents) {
+        if (estonianWasteTypes[parent.Name]) {
+          return estonianWasteTypes[parent.Name];
+        }
+      }
     }
   }
   return "Segajäätmed"; // Default to mixed waste if no match

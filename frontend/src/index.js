@@ -21,5 +21,5 @@ async function uploadImage() {
 
     const data = await res.json();
     console.log(data)
-    document.getElementById('result').innerText = data.result || data.error;
+    document.getElementById('result').innerText = data.estonianTrashType || data.error;
 }
