@@ -75,7 +75,6 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 
 function classifyEstonianTrash(labels) {
   for (const label of labels) {
-    // Check confidence threshold
     if (label.Confidence < 70) continue;
 
     // Check main label name
@@ -102,7 +101,6 @@ function classifyEstonianTrash(labels) {
     }
   }
 
-  // Default to mixed waste if no match found
   return "Segajäätmed";
 }
 
