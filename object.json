@@ -1,0 +1,97 @@
+{
+    "Labels": [
+        {
+            "Aliases": [
+                {
+                    "Name": "Drink"
+                }
+            ],
+            "Categories": [
+                {
+                    "Name": "Food and Beverage"
+                }
+            ],
+            "Confidence": 99.37061309814453,
+            "Instances": [],
+            "Name": "Beverage",
+            "Parents": []
+        },
+        {
+            "Aliases": [
+                {
+                    "Name": "Coca Cola"
+                }
+            ],
+            "Categories": [
+                {
+                    "Name": "Food and Beverage"
+                }
+            ],
+            "Confidence": 99.37061309814453,
+            "Instances": [],
+            "Name": "Coke",
+            "Parents": [
+                {
+                    "Name": "Beverage"
+                },
+                {
+                    "Name": "Soda"
+                }
+            ]
+        },
+        {
+            "Aliases": [],
+            "Categories": [
+                {
+                    "Name": "Food and Beverage"
+                }
+            ],
+            "Confidence": 99.37061309814453,
+            "Instances": [],
+            "Name": "Soda",
+            "Parents": [
+                {
+                    "Name": "Beverage"
+                }
+            ]
+        },
+        {
+            "Aliases": [],
+            "Categories": [
+                {
+                    "Name": "Food and Beverage"
+                }
+            ],
+            "Confidence": 88.7867660522461,
+            "Instances": [],
+            "Name": "Food",
+            "Parents": []
+        },
+        {
+            "Aliases": [],
+            "Categories": [
+                {
+                    "Name": "Food and Beverage"
+                }
+            ],
+            "Confidence": 88.7867660522461,
+            "Instances": [
+                {
+                    "BoundingBox": {
+                        "Height": 0.9886723756790161,
+                        "Left": 0.21784617006778717,
+                        "Top": 0.004203415010124445,
+                        "Width": 0.5629869103431702
+                    },
+                    "Confidence": 88.7867660522461
+                }
+            ],
+            "Name": "Ketchup",
+            "Parents": [
+                {
+                    "Name": "Food"
+                }
+            ]
+        }
+    ]
+}
