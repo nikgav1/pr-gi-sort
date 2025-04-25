@@ -6,6 +6,7 @@ import { fromEnv } from "@aws-sdk/credential-providers";
 import multer from "multer";
 import fs from "fs";
 import dotenv from "dotenv"; 
+import { networkInterfaces } from 'os';
 
 import estonianWasteTypes from "./estonian-wastes.js";
 
@@ -106,6 +107,19 @@ function classifyEstonianTrash(labels) {
 }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const HOST = '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
+  
+  // Get local IP address for easy sharing
+  const nets = networkInterfaces();
+
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+      // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+      if (net.family === 'IPv4' && !net.internal) {
+        console.log(`Access on local network: http://${net.address}:${PORT}`);
+      }
+    }
+  }
 });
