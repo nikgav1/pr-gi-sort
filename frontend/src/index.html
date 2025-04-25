@@ -6,9 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Upload Garbage Image</h1>
-    <input type="file" id="imageInput" accept="image/*" />
-    <button id="clickBtn">Classify</button>
-    <p id="result"></p>  
+    <div class="container">
+        <header>
+            <h1>PrugiSort</h1>
+            <p class="subtitle">AI-powered Estonian waste sorting assistant</p>
+        </header>
+        <main>
+            <div class="upload-section">
+                <input type="file" id="imageInput" accept="image/*" />
+                <button id="clickBtn">Classify</button>
+            </div>
+            <div id="preview"></div>
+            <p id="result"></p>
+        </main>
+        <footer>
+            <p>© 2025 PrugiSort &middot; Powered by AWS Rekognition</p>
+        </footer>
+    </div>
 </body>
 </html>

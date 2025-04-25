@@ -1,25 +1,38 @@
-import "./style.css"
+import "./style.css";
 
-const btn = document.getElementById('clickBtn')
+const btn = document.getElementById("clickBtn");
 
-btn.addEventListener('click', () => {
-    uploadImage()
-})
+btn.addEventListener("click", () => {
+  uploadImage();
+});
 
 async function uploadImage() {
-    const input = document.getElementById('imageInput');
-    const file = input.files[0];
-    if (!file) return alert("Choose an image first.");
+  const input = document.getElementById("imageInput");
+  const file = input.files[0];
+  if (!file) return alert("Choose an image first.");
 
-    const formData = new FormData();
-    formData.append('image', file);
+  const formData = new FormData();
+  formData.append("image", file);
 
-    const res = await fetch('/upload', {
-      method: 'POST',
-      body: formData
-    });
+  const res = await fetch("/upload", {
+    method: "POST",
+    body: formData,
+  });
 
-    const data = await res.json();
-    console.log(data)
-    document.getElementById('result').innerText = data.estonianTrashType || data.error;
+  const data = await res.json();
+  console.log(data);
+  document.getElementById("result").innerText =
+    data.estonianTrashType || data.error;
 }
+
+document.getElementById("imageInput").addEventListener("change", function (e) {
+  const file = e.target.files[0];
+  const preview = document.getElementById("preview");
+  preview.innerHTML = "";
+  if (file) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(file);
+    img.className = "preview-img";
+    preview.appendChild(img);
+  }
+});

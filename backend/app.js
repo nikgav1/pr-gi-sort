@@ -8,7 +8,7 @@ import fs from "fs";
 import dotenv from "dotenv"; 
 import { networkInterfaces } from 'os';
 
-import estonianWasteTypes from "./estonian-wastes.js";
+import classifyEstonianTrash from "./scripts/classifyEstonianTrash.js";
 
 dotenv.config(); 
 
@@ -72,37 +72,6 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-function classifyEstonianTrash(labels) {
-  for (const label of labels) {
-    if (label.Confidence < 70) continue;
-
-    // Check main label name
-    if (estonianWasteTypes[label.Name]) {
-      return estonianWasteTypes[label.Name];
-    }
-
-    // Check aliases
-    if (label.Aliases) {
-      for (const alias of label.Aliases) {
-        if (estonianWasteTypes[alias.Name]) {
-          return estonianWasteTypes[alias.Name];
-        }
-      }
-    }
-
-    // Check parent labels
-    if (label.Parents) {
-      for (const parent of label.Parents) {
-        if (estonianWasteTypes[parent.Name]) {
-          return estonianWasteTypes[parent.Name];
-        }
-      }
-    }
-  }
-
-  return "Segajäätmed";
-}
 
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
