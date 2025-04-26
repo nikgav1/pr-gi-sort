@@ -21,8 +21,7 @@ async function uploadImage() {
 
   const data = await res.json();
   console.log(data);
-  document.getElementById("result").innerText =
-    data.estonianTrashType || data.error;
+  document.getElementById("result").textContent = `${data.estonianWasteType}, ${data.top}` || data.error;
 }
 
 document.getElementById("imageInput").addEventListener("change", function (e) {

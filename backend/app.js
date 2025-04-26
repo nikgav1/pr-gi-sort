@@ -1,37 +1,24 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
-import { RekognitionClient, DetectLabelsCommand } from "@aws-sdk/client-rekognition";
-import { fromEnv } from "@aws-sdk/credential-providers";
-import multer from "multer";
-import fs from "fs";
-import dotenv from "dotenv"; 
-import { networkInterfaces } from 'os';
-
-import classifyEstonianTrash from "./scripts/classifyEstonianTrash.js";
-
-dotenv.config(); 
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+import express from 'express';
+import multer from 'multer';
+import * as tf from '@tensorflow/tfjs-node';
+import * as mobilenet from '@tensorflow-models/mobilenet';
+import classifyEstonianTrash from './scripts/classifyEstonianTrash.js';
+
 const app = express();
+const upload = multer({ storage: multer.memoryStorage() });
 
-app.use(express.static("public"));
-app.use(express.json());
+let model;
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = 'uploads';
-if (!fs.existsSync(uploadsDir)){
-    fs.mkdirSync(uploadsDir);
-}
-
-const upload = multer({ dest: uploadsDir });
-
-const client = new RekognitionClient({
-  region: process.env.AWS_REGION,
-  credentials: fromEnv(),
-});
+(async () => {
+  model = await mobilenet.load({ version: 2, alpha: 1.0 });
+  console.log('MobileNetV2 loaded');
+})();
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
@@ -39,54 +26,29 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
-app.post("/upload", upload.single("image"), async (req, res) => {
+app.post('/upload', upload.single('image'), async (req, res) => {
   try {
-    const imageBytes = await fs.promises.readFile(req.file.path);
+    if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
 
-    const command = new DetectLabelsCommand({
-      Image: { Bytes: imageBytes },
-      MaxLabels: 10,
-      MinConfidence: 70,
-    });
-    const { Labels } = await client.send(command);
+    // Decode image buffer to TF tensor (H×W×3), auto-normalize to [0,255]
+    const imgTensor = tf.node.decodeImage(req.file.buffer, 3);  
+    // Run classification
+    const predictions = await model.classify(imgTensor);
 
-    // Only try to delete the file if it exists
-    try {
-      await fs.promises.unlink(req.file.path);
-    } catch (unlinkError) {
-      console.warn('Failed to delete uploaded file:', unlinkError.message);
-    }
+    const top = predictions[0].className;
 
-    const estonianTrashType = classifyEstonianTrash(Labels);
+    const estonianWasteType = classifyEstonianTrash(top);
 
-    res.json({ estonianTrashType });
+    imgTensor.dispose();
+
+    res.json({ estonianWasteType, top });
   } catch (err) {
-    if (req.file) {
-      try {
-        await fs.promises.unlink(req.file.path);
-      } catch (unlinkError) {
-        console.warn('Failed to delete uploaded file:', unlinkError.message);
-      }
-    }
-    console.error("Error:", err);
+    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-const HOST = '0.0.0.0';
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`);
-  
-  // Get local IP address for easy sharing
-  const nets = networkInterfaces();
-
-  for (const name of Object.keys(nets)) {
-    for (const net of nets[name]) {
-      // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
-      if (net.family === 'IPv4' && !net.internal) {
-        console.log(`Access on local network: http://${net.address}:${PORT}`);
-      }
-    }
-  }
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
