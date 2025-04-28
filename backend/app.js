@@ -1,5 +1,6 @@
 import { fileURLToPath } from "url";
 import path from "path";
+import fs from "fs";
 import express from "express";
 import multer from "multer";
 import sharp from "sharp";
@@ -7,55 +8,71 @@ import * as tf from "@tensorflow/tfjs-node";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import classifyEstonianTrash from "./scripts/classifyEstonianTrash.js";
 
-// Reduce TensorFlow log verbosity
 process.env.TF_CPP_MIN_LOG_LEVEL = "2";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
+sharp.cache(false);
+sharp.concurrency(1);
+
 const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  dest: "/tmp/uploads",
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
 });
 
 let model;
-(async () => {
-  model = await mobilenet.load({ version: 2, alpha: 1 });
-  console.log("MobileNetV2 loaded");
-})();
+const loadModel = async () => {
+  if (!model) {
+    model = await mobilenet.load({ version: 2, alpha: 1 });
+    console.log("MobileNetV2 loaded");
+  }
+};
+
+const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: "No image uploaded" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No image uploaded" });
+    }
 
-    // Resize image to 224×224 using sharp to reduce Tensor memory
-    const resizedBuffer = await sharp(req.file.buffer)
-      .resize(224, 224)
-      .toFormat("png")
-      .toBuffer();
+    // Ensure model is ready
+    await loadModel();
 
-    const inputTensor = tf.tidy(() => {
-      const imgTensor = tf.node.decodeImage(resizedBuffer, 3);
-      const expanded = imgTensor.expandDims(0);
-      imgTensor.dispose();
-      return expanded;
+    // Resize + convert to PNG in memory, returns Buffer
+    const buffer = await sharp(req.file.path).resize(224, 224).png().toBuffer();
+
+    fs.unlink(req.file.path, (err) => {
+      if (err) console.error("Temp file cleanup error:", err);
     });
 
-    // Run async inference outside of tidy
+    const inputTensor = tf.tidy(() => {
+      const img = tf.node
+        .decodeImage(buffer, 3)
+        .resizeNearestNeighbor([224, 224])
+        .toFloat()
+        .expandDims(0);
+      return img;
+    });
+
+    // Classify and free the input tensor
     const predictions = await model.classify(inputTensor);
     inputTensor.dispose();
 
-    // Get top result
     const top = predictions[0].className;
     const estonianWasteType = classifyEstonianTrash(top);
 
+    // Send result
     res.json({ estonianWasteType, top });
+
+    console.log(process.memoryUsage());
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
