@@ -1,5 +1,6 @@
 FROM node:20-slim AS builder
 WORKDIR /app/frontend
+# Frontend deps
 COPY frontend/package*.json ./
 RUN npm install
 COPY frontend/ .
@@ -15,4 +16,4 @@ COPY backend/ .
 COPY --from=builder /app/frontend/dist ./public
 
 EXPOSE 3000
-CMD ["node", "app.js"]
+CMD ["npm run", "run"]
