@@ -16,4 +16,4 @@ COPY backend/ .
 COPY --from=builder /app/frontend/dist ./public
 
 EXPOSE 3000
-CMD ["npm run", "run"]
+CMD ["node", "app.js"]
