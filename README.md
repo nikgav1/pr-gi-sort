@@ -12,15 +12,15 @@ AI-powered Estonian waste sorting assistant that helps classify waste items usin
   - Biojäätmed (Bio-waste)
   - Klaas (Glass)
   - Metall (Metal)
-  - Elektroonika (Electronics)
-  - Ohtlikud jäätmed (Hazardous waste)
-  - Pakend (Packaging)
   - Segajäätmed (Mixed waste)
 
 ## Technology Stack
 
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js, Express
-- **Image Recognition**: AWS Rekognition
+- **Image Recognition**: TensorFlow + MobileNetV2
+
+## Preview
+https://prugisort-203670920638.europe-north1.run.app
 
 The algorith of image recognition is still bad and inaccurate(, but will be remade
