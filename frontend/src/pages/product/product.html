@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <title>PrugiSort</title>
+  </head>
+  <body>
+    <header>
+        <div id="top-nav-bar">
+          <nav>
+            <a id="logo" href="/">PrugiSort</a>
+            <a href="/">Home</a>
+            <a href="/product">Sort!</a>
+          </nav>
+        </div>
+      </header>
+    <main>
+      <div class="container">
+        <header>
+          <h1>PrugiSort</h1>
+          <p class="subtitle">AI-powered Estonian waste sorting assistant</p>
+        </header>
+        <main>
+          <div class="upload-section">
+            <input
+              type="file"
+              id="imageInput"
+              capture="environment"
+              accept="image/*"
+            />
+            <button id="clickBtn">Classify</button>
+          </div>
+          <div id="preview"></div>
+          <p id="result"></p>
+        </main>
+        <footer>
+          <p>© 2025 PrugiSort</p>
+        </footer>
+      </div>
+    </main>
+  </body>
+</html>

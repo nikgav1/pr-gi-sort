@@ -1,4 +1,5 @@
-import "./style.css";
+import "./product.css";
+import "../../shared/styles/shared.css"
 
 const btn = document.getElementById("clickBtn");
 

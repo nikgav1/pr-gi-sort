@@ -37,6 +37,10 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
+app.get("/product", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/product.html"))
+})
+
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {

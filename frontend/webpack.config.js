@@ -2,10 +2,14 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-    entry: "./src/index.js", 
+    entry: {
+        index: "./src/pages/main/index.js", 
+        product: "./src/pages/product/product.js"
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js",
+        filename: "[name].[contenthash].js",
+        clean: true
     },
     module: {
         rules: [
@@ -22,8 +26,30 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html", 
+            template: "./src/pages/main/index.html",
+            filename: "index.html",
+            chunks: ["index"]
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/pages/product/product.html",
+            filename: "product.html",
+            chunks: ["product"]
         }),
     ],
-    mode: "production", 
+    mode: "production",
+    optimization: {
+        splitChunks: {
+            chunks: 'all', // Extracts common dependencies into separate chunks
+        },
+    },
+    devServer: {
+        static: {
+            directory: path.join(__dirname, 'dist'),
+        },
+        compress: true,
+        port: 8080,
+        hot: true,
+        open: true,
+        historyApiFallback: true,
+    },
 };
