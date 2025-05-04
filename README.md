@@ -21,6 +21,7 @@ AI-powered Estonian waste sorting assistant that helps classify waste items usin
 - **Image Recognition**: TensorFlow + MobileNetV2
 
 ## Preview
+
 https://prugisort-203670920638.europe-north1.run.app
 
 The algorith of image recognition is still bad and inaccurate(, but will be remade

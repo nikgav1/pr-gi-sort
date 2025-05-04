@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,14 +13,14 @@
   </head>
   <body>
     <header>
-        <div id="top-nav-bar">
-          <nav>
-            <a id="logo" href="/">PrugiSort</a>
-            <a href="/">Home</a>
-            <a href="/product">Sort!</a>
-          </nav>
+      <nav id="top-nav-bar">
+        <a id="logo" href="/">PrugiSort</a>
+        <div>
+          <a href="/">Home</a>
+          <a href="/product">Sort!</a>
         </div>
-      </header>
+      </nav>
+    </header>
     <main>
       <div class="container">
         <header>
@@ -29,21 +29,16 @@
         </header>
         <main>
           <div class="upload-section">
-            <input
-              type="file"
-              id="imageInput"
-              capture="environment"
-              accept="image/*"
-            />
+            <input type="file" id="imageInput" capture="environment" accept="image/*" />
             <button id="clickBtn">Classify</button>
           </div>
           <div id="preview"></div>
           <p id="result"></p>
         </main>
-        <footer>
-          <p>© 2025 PrugiSort</p>
-        </footer>
       </div>
     </main>
+    <footer>
+      <p>© 2025 PrugiSort</p>
+    </footer>
   </body>
 </html>

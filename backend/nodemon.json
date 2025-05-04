@@ -1,11 +1,5 @@
 {
-  "watch": [
-    "app.js",
-    "./scripts",
-    "../frontend/dist"
-  ],
+  "watch": ["app.js", "./scripts", "../frontend/dist"],
   "ext": "js,json,html,css",
-  "ignore": [
-    "node_modules"
-  ]
+  "ignore": ["node_modules"]
 }

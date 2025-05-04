@@ -1,0 +1,253 @@
+.hero {
+  background-color: var(--light-blue);
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  margin: 0 3rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+}
+
+.hero-content {
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--dark-violet);
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.6rem;
+  color: var(--dark-violet);
+  margin-bottom: 3rem;
+  line-height: 1.4;
+  font-weight: 400;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: var(--light-green);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: var(--dark-violet);
+}
+
+.benefits {
+  padding: 6rem 2rem;
+  background-color: white;
+}
+
+.benefits h2 {
+  text-align: center;
+  color: var(--dark-violet);
+  margin-bottom: 4rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  padding: 2rem;
+  background-color: var(--light-blue);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.benefit-card:hover {
+  background-color: var(--light-green);
+}
+
+.benefit-card h3 {
+  color: var(--dark-violet);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.benefit-card p {
+  color: var(--dark-violet);
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.features {
+  padding: 6rem 2rem;
+  background-color: var(--light-blue);
+  margin: 0 3rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+}
+
+.features h2 {
+  text-align: center;
+  color: var(--dark-violet);
+  margin-bottom: 4rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.feature-card:hover {
+  background-color: var(--light-green);
+}
+
+.feature-card:hover h3,
+.feature-card:hover p {
+  color: white;
+}
+
+.feature-card h3 {
+  color: var(--dark-violet);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.feature-card p {
+  color: var(--dark-violet);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 1200px) {
+  .hero {
+    margin: 2rem 2rem;
+  }
+
+  .benefits-grid,
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    min-height: 80vh;
+    margin: 1.5rem;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .benefits,
+  .features {
+    padding: 4rem 1.5rem;
+    margin: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    margin: 1rem;
+    padding: 3rem 1rem;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .benefits-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .benefits h2,
+  .features h2 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .benefit-card,
+  .feature-card {
+    padding: 1.5rem;
+  }
+
+  .cta-button {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    margin: 0.5rem;
+    min-height: 70vh;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .benefits,
+  .features {
+    padding: 3rem 1rem;
+    margin: 0.5rem;
+  }
+
+  .benefit-card h3,
+  .feature-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .benefit-card p,
+  .feature-card p {
+    font-size: 1rem;
+  }
+}

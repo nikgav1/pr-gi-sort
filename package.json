@@ -1,0 +1,25 @@
+{
+  "name": "pr-gi-sort",
+  "version": "1.0.0",
+  "description": "AI-powered Estonian waste sorting assistant that helps classify waste items using image recognition.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikgav1/pr-gi-sort.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nikgav1/pr-gi-sort/issues"
+  },
+  "homepage": "https://github.com/nikgav1/pr-gi-sort#readme",
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  }
+}
