@@ -5,7 +5,7 @@ AI-powered Estonian waste sorting assistant that helps classify waste items usin
 ## Features
 
 - Upload images of waste items
-- AWS Rekognition-based image classification
+- TensorFlow + MobileNetV2 (Training own model for the best recognition)
 - Categorizes items into Estonian waste types:
   - Plastik (Plastics)
   - Paber ja kartong (Paper and cardboard)
