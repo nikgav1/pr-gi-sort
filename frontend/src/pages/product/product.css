@@ -1,0 +1,161 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.container header {
+  text-align: center;
+  margin-bottom: 3rem;
+  background-color: var(--light-blue);
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+}
+
+.container h1 {
+  font-size: 3rem;
+  color: var(--dark-violet);
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: var(--dark-violet);
+}
+
+.upload-section {
+  background-color: var(--light-blue);
+  padding: 4rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+}
+
+#imageInput {
+  display: inline-block;
+  margin: 1rem;
+  font-size: 1rem;
+}
+
+#imageInput::file-selector-button {
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--light-green);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
+}
+
+#imageInput::file-selector-button:hover {
+  background-color: var(--dark-violet);
+}
+
+#clickBtn{
+    font-size: 1.2rem;
+    padding: 0.7rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--light-green);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 1rem;
+}
+
+#clickBtn:hover{
+    background-color: var(--dark-violet);
+}
+
+#preview {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 400px;
+}
+
+#preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+}
+
+#result {
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--light-blue);
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(44, 40, 46, 0.08);
+  color: var(--dark-violet);
+  font-size: 1.4rem;
+  font-weight: 600;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .container header {
+    padding: 2rem 1rem;
+  }
+
+  .container h1 {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .upload-section {
+    padding: 2rem;
+  }
+  #imageInput{
+    width: 200px;
+  }
+
+  #imageInput::file-selector-button {
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+  }
+
+  #preview {
+    max-width: 300px;
+  }
+
+  #result {
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  #preview {
+    max-width: 250px;
+  }
+
+  #result {
+    margin: 1rem auto;
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+}
