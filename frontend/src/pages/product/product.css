@@ -56,21 +56,21 @@
   background-color: var(--dark-violet);
 }
 
-#clickBtn{
-    font-size: 1.2rem;
-    padding: 0.7rem 1.8rem;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--light-green);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 1rem;
+#clickBtn {
+  font-size: 1.2rem;
+  padding: 0.7rem 1.8rem;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--light-green);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
 }
 
-#clickBtn:hover{
-    background-color: var(--dark-violet);
+#clickBtn:hover {
+  background-color: var(--dark-violet);
 }
 
 #preview {
@@ -120,7 +120,7 @@
   .upload-section {
     padding: 2rem;
   }
-  #imageInput{
+  #imageInput {
     width: 200px;
   }
 
