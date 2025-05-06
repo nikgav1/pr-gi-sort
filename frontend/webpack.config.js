@@ -6,6 +6,7 @@ module.exports = {
     index: './src/pages/main/index.js',
     product: './src/pages/product/product.js',
     signup: './src/pages/signup/signup.js',
+    signin: './src/pages/signin/signin.js',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -40,6 +41,11 @@ module.exports = {
       template: './src/pages/signup/signup.html',
       filename: 'signup.html',
       chunks: ['signup'],
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/pages/signin/signin.html',
+      filename: 'signin.html',
+      chunks: ['signin'],
     }),
   ],
   mode: 'production',

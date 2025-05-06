@@ -37,3 +37,5 @@ document.getElementById('imageInput').addEventListener('change', function (e) {
     preview.appendChild(img);
   }
 });
+
+

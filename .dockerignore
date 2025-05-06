@@ -5,16 +5,12 @@ frontend/.gitignore
 frontend/npm-debug.log
 frontend/yarn-debug.log
 frontend/yarn-error.log
-frontend/.env
-frontend/.env.*
 frontend/coverage
 
 # Backend
 backend/node_modules
 backend/nodemon.json
 backend/.gitignore
-backend/.env
-backend/.env.*
 backend/coverage
 backend/logs
 backend/dist
