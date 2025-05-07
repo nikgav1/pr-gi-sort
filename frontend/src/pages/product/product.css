@@ -99,6 +99,21 @@
   max-width: 600px;
 }
 
+#log-btn {
+  display: none; /* Hidden by default */
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#log-btn.visible {
+  display: inline-block;
+}
+
+#log-btn:not(:disabled) {
+  opacity: 1;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .container {
     margin: 1rem;

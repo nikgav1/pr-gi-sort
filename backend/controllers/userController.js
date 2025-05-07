@@ -32,30 +32,25 @@ export const signup = async (req, res) => {
 
 export const signin = async (req, res) => {
   try {
-    const { email, hashedPassword } = req.body;
+    const { email, password } = req.body;
     // Find user by email
     const user = await User.findOne({ email });
 
-    const match = await bcrypt.compare(hashedPassword, user.password);
+    const match = await bcrypt.compare(password, user.password);
     if (!match) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const token = jwt.sign(
-      { userId: user._id ,
-        userName: user.name
-      }, 
-      process.env.TOKEN_SECRET, 
-      { expiresIn: '1h' }
+      { userId: user._id, userEmail: user.email, userName: user.name },
+      process.env.TOKEN_SECRET,
+      {
+        expiresIn: '1h',
+      }
     );
 
-    res.json({ 
+    res.json({
       token,
-      user: {
-        id: user._id,
-        email: user.email,
-        name: user.name
-      }
     });
   } catch (error) {
     console.error('Login error:', error);

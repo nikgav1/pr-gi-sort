@@ -20,7 +20,7 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/signin', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/signin.html'))
-})
+  res.sendFile(path.join(__dirname, '../public/signin.html'));
+});
 
 export default router;

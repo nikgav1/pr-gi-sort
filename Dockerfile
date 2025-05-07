@@ -1,4 +1,4 @@
-FROM node:20-slim AS builder
+FROM node:22-slim AS builder
 WORKDIR /app/frontend
 # Frontend deps
 COPY frontend/package*.json ./
@@ -6,7 +6,7 @@ RUN npm install
 COPY frontend/ .
 RUN npm run build
 
-FROM node:20-slim
+FROM node:22-slim
 WORKDIR /app
 # Backend deps
 COPY backend/package*.json ./

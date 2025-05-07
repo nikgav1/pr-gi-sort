@@ -3,7 +3,7 @@ import './signin.css';
 
 const form = document.getElementById('sign-in-form');
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', async e => {
   e.preventDefault();
 
   const dataForm = new FormData(e.target);
@@ -16,7 +16,7 @@ form.addEventListener('submit', async (e) => {
     const res = await fetch('/users/signin', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(userSignInData),
     });

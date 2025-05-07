@@ -21,10 +21,10 @@ form.addEventListener('submit', async e => {
     body: JSON.stringify(userData),
   });
   const data = await res.json();
-  const result = document.getElementById('result')
-  if (res.status === 200){
+  const result = document.getElementById('result');
+  if (res.status === 200) {
     result.textContent = data.message;
-  } else if(res.status === 400){
-    result.textContent = 'Email already in use!'
+  } else if (res.status === 400) {
+    result.textContent = 'Email already in use!';
   }
 });
