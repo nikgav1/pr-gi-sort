@@ -40,6 +40,9 @@ async function loadProfile() {
         'Content-Type': 'application/json',
       },
     });
+    if(!res.ok){
+        window.location.href = '/signin'
+    }
     const profileData = await res.json();
     insertProfile(profileData.name, profileData.sortedTrash);
     console.log(profileData);

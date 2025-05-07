@@ -100,18 +100,35 @@
 }
 
 #log-btn {
-  display: none; /* Hidden by default */
-  opacity: 0.6;
-  cursor: not-allowed;
+  display: none; /* Hidden, will be shown in JS */
+  margin: 20px auto;
+  padding: 12px 24px;
+  background-color: var(--dark-violet);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #log-btn.visible {
-  display: inline-block;
+  display: block;
 }
 
-#log-btn:not(:disabled) {
-  opacity: 1;
-  cursor: pointer;
+#log-btn:hover {
+  background-color: var(--light-violet);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#log-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -152,6 +169,12 @@
     margin: 1.5rem auto;
     padding: 1.5rem;
     font-size: 1.2rem;
+  }
+
+  #log-btn {
+    width: 90%;
+    padding: 15px;
+    font-size: 1.1rem;
   }
 }
 
