@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/main.html'));
 });
 
 router.get('/product', (req, res) => {
@@ -21,6 +21,10 @@ router.get('/signup', (req, res) => {
 
 router.get('/signin', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/signin.html'));
+});
+
+router.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/profile.html'));
 });
 
 export default router;

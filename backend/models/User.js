@@ -7,9 +7,9 @@ const userSchema = new mongoose.Schema({
   sortedTrash: {
     'papp- ja paberpakend': { type: Number, default: 0 },
     'plast- ja metallpakend': { type: Number, default: 0 },
-    'klaaspakend': { type: Number, default: 0 },
-    'biojäätmed': { type: Number, default: 0 },
-    'olmejäätmed': { type: Number, default: 0 },
+    klaaspakend: { type: Number, default: 0 },
+    biojäätmed: { type: Number, default: 0 },
+    olmejäätmed: { type: Number, default: 0 },
   },
 });
 

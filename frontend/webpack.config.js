@@ -1,13 +1,36 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const fs = require('fs');
+
+// Find all page directories in src/pages/
+const pagesDir = path.join(__dirname, 'src/pages');
+const pages = fs.readdirSync(pagesDir).filter(dir => {
+  const fullDir = path.join(pagesDir, dir);
+  return (
+    fs.statSync(fullDir).isDirectory() &&
+    fs.existsSync(path.join(fullDir, `${dir}.js`)) &&
+    fs.existsSync(path.join(fullDir, `${dir}.html`))
+  );
+});
+
+const entry = {};
+pages.forEach(page => {
+  entry[page] = `./src/pages/${page}/${page}.js`;
+});
+
+// Build HtmlWebpackPlugin instances
+const htmlPlugins = pages.map(
+  page =>
+    new HtmlWebpackPlugin({
+      template: `./src/pages/${page}/${page}.html`,
+      filename: `${page}.html`,
+      chunks: [page],
+      inject: 'body',
+    })
+);
 
 module.exports = {
-  entry: {
-    index: './src/pages/main/index.js',
-    product: './src/pages/product/product.js',
-    signup: './src/pages/signup/signup.js',
-    signin: './src/pages/signin/signin.js',
-  },
+  entry,
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
@@ -26,32 +49,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/pages/main/index.html',
-      filename: 'index.html',
-      chunks: ['index'],
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/pages/product/product.html',
-      filename: 'product.html',
-      chunks: ['product'],
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/pages/signup/signup.html',
-      filename: 'signup.html',
-      chunks: ['signup'],
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/pages/signin/signin.html',
-      filename: 'signin.html',
-      chunks: ['signin'],
-    }),
-  ],
+  plugins: htmlPlugins,
   mode: 'production',
   optimization: {
     splitChunks: {
-      chunks: 'all', // Extracts common dependencies into separate chunks
+      chunks: 'all',
     },
   },
   devServer: {

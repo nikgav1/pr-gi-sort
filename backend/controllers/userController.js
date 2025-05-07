@@ -57,3 +57,25 @@ export const signin = async (req, res) => {
     res.status(500).json({ error: 'Error logging in' });
   }
 };
+
+export const getUserInfo = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const safeUserObject = {
+      name: user.name,
+      sortedTrash: user.sortedTrash,
+    };
+
+    res.json(safeUserObject);
+  } catch (error) {
+    console.error('Getting user info error:', error);
+    res.status(500).json({ error: 'Getting user info error' });
+  }
+};

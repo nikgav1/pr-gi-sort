@@ -116,7 +116,9 @@ async function uploadImage() {
     };
 
     result.textContent = `${currentTrashData.estonianWasteType}, ${currentTrashData.originalType}`;
+
     enableLogButton();
+    imageInput.value = '';
   } catch (error) {
     console.error('Upload error:', error);
     result.textContent = 'Error processing image';
