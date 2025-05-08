@@ -1,6 +1,10 @@
 import '../../shared/styles/shared.css';
 import './product.css';
-import { getAuthToken } from '../../utils/auth';
+import { getAuthToken } from '../../shared/scripts/auth';
+
+import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+
+document.addEventListener('DOMContentLoaded', initializeNavAuth);
 
 // Variable to store the trash data
 let currentTrashData = null;

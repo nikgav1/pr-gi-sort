@@ -1,6 +1,10 @@
 import '../../shared/styles/shared.css';
 import './signin.css';
 
+import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+
+document.addEventListener('DOMContentLoaded', initializeNavAuth);
+
 const form = document.getElementById('sign-in-form');
 
 form.addEventListener('submit', async e => {

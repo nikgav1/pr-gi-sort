@@ -1,6 +1,10 @@
 import '../../shared/styles/shared.css';
 import './signup.css';
 
+import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+
+document.addEventListener('DOMContentLoaded', initializeNavAuth);
+
 const form = document.getElementById('sign-up-form');
 
 form.addEventListener('submit', async e => {
@@ -21,7 +25,11 @@ form.addEventListener('submit', async e => {
     body: JSON.stringify(userData),
   });
   const data = await res.json();
+
+  localStorage.setItem('token', data.token);
   const result = document.getElementById('result');
+
+  window.location.href = '/';
   if (res.status === 200) {
     result.textContent = data.message;
   } else if (res.status === 400) {

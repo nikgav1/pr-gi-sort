@@ -1,6 +1,11 @@
 import '../../shared/styles/shared.css';
 import './profile.css';
-import { getAuthToken } from '../../utils/auth';
+import { getAuthToken } from '../../shared/scripts/auth';
+import getUserInfo from '../../utils/userInfo';
+
+import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+
+document.addEventListener('DOMContentLoaded', initializeNavAuth);
 
 const token = getAuthToken();
 if (!token) {
@@ -33,15 +38,10 @@ function insertProfile(name, trashObject) {
 }
 async function loadProfile() {
   try {
-    const res = await fetch('/users/user-info', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    if(!res.ok){
-        window.location.href = '/signin'
+    const res = await getUserInfo(token);
+
+    if (!res.ok) {
+      window.location.href = '/signin';
     }
     const profileData = await res.json();
     insertProfile(profileData.name, profileData.sortedTrash);
@@ -50,4 +50,4 @@ async function loadProfile() {
     console.log(error);
   }
 }
-loadProfile();
+await loadProfile();

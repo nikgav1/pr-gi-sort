@@ -8,5 +8,8 @@ const router = express.Router();
 
 router.post('/upload', authenticateToken, upload.single('image'), processImage);
 router.post('/log-trash', authenticateToken, logTrash);
+router.get('/validate-token', authenticateToken, (req, res) => {
+  res.json({ valid: true });
+});
 
 export default router;

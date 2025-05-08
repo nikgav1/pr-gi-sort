@@ -20,9 +20,15 @@ export const signup = async (req, res) => {
     });
     await newUser.save();
 
+    const token = jwt.sign(
+      { userId: newUser._id, userEmail: newUser.email, userName: newUser.name },
+      process.env.TOKEN_SECRET,
+      { expiresIn: '24h' }
+    );
+
     res.status(200).json({
       message: 'User created successfully',
-      userId: newUser._id,
+      token,
     });
   } catch (err) {
     console.error('Signup error:', err);
@@ -54,12 +60,11 @@ export const signin = async (req, res) => {
     // Generate JWT token
     const token = jwt.sign(
       { userId: user._id, userEmail: user.email, userName: user.name },
-      process.env.JWT_SECRET,
+      process.env.TOKEN_SECRET,
       { expiresIn: '24h' }
     );
 
     res.json({ token });
-
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Login failed' });

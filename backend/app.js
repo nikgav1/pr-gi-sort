@@ -17,7 +17,6 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route handlers
@@ -25,10 +24,23 @@ app.use('/', pageRoutes);
 app.use('/users', userRoutes);
 app.use('/api', apiRoutes);
 
-// Connect to MongoDB
-await run();
 // Error handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+async function startServer() {
+  try {
+    // Connect to MongoDB
+    await run();
+
+    const port = parseInt(process.env.PORT) || 3000;
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`Server listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
+}
+
+// Start the server
+startServer();
