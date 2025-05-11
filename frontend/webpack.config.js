@@ -1,6 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 // Find all page directories in src/pages/
 const pagesDir = path.join(__dirname, 'src/pages');
@@ -45,15 +47,42 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'postcss-loader',
+        ],
       },
     ],
   },
-  plugins: htmlPlugins,
+  plugins: [
+    ...htmlPlugins,
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
+    }),
+  ],
   mode: 'production',
   optimization: {
+    minimizer: [
+      `...`, // Keep existing minimizers
+      new CssMinimizerPlugin(),
+    ],
     splitChunks: {
       chunks: 'all',
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          type: 'css/mini-extract',
+          chunks: 'all',
+          enforce: true,
+        },
+      },
     },
   },
   devServer: {

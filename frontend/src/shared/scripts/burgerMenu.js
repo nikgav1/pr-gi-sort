@@ -33,10 +33,8 @@ export function initializeBurgerMenu() {
     }
   });
 
-  document.addEventListener('click', (e) => {
-    if (isMobile() && 
-        !burger.contains(e.target) && 
-        !navDiv.contains(e.target)) {
+  document.addEventListener('click', e => {
+    if (isMobile() && !burger.contains(e.target) && !navDiv.contains(e.target)) {
       burger.classList.remove('active');
       navDiv.style.display = 'none';
     }
