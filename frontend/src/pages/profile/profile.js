@@ -4,8 +4,12 @@ import { getAuthToken } from '../../shared/scripts/auth';
 import getUserInfo from '../../utils/userInfo';
 
 import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+import { initializeBurgerMenu } from '../../shared/scripts/burgerMenu.js';
 
-document.addEventListener('DOMContentLoaded', initializeNavAuth);
+document.addEventListener('DOMContentLoaded', () => {
+  initializeNavAuth();
+  initializeBurgerMenu();
+});
 
 const token = getAuthToken();
 if (!token) {

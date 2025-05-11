@@ -2,8 +2,12 @@ import '../../shared/styles/shared.css';
 import './signin.css';
 
 import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+import { initializeBurgerMenu } from '../../shared/scripts/burgerMenu.js';
 
-document.addEventListener('DOMContentLoaded', initializeNavAuth);
+document.addEventListener('DOMContentLoaded', () => {
+  initializeNavAuth();
+  initializeBurgerMenu();
+});
 
 const form = document.getElementById('sign-in-form');
 
@@ -12,7 +16,7 @@ form.addEventListener('submit', async e => {
 
   const dataForm = new FormData(e.target);
   const userSignInData = {
-    email: dataForm.get('email'),
+    email: dataForm.get('email').toLowerCase(),
     password: dataForm.get('password'),
   };
 

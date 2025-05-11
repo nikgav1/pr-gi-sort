@@ -3,8 +3,12 @@ import './product.css';
 import { getAuthToken } from '../../shared/scripts/auth';
 
 import { initializeNavAuth } from '../../shared/scripts/pageLoad.js';
+import { initializeBurgerMenu } from '../../shared/scripts/burgerMenu.js';
 
-document.addEventListener('DOMContentLoaded', initializeNavAuth);
+document.addEventListener('DOMContentLoaded', () => {
+  initializeNavAuth();
+  initializeBurgerMenu();
+});
 
 // Variable to store the trash data
 let currentTrashData = null;

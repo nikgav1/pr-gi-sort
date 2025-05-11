@@ -40,6 +40,19 @@ form button {
   margin-top: 1rem;
 }
 
+#no-acc {
+  text-align: center;
+}
+
+#no-acc a {
+  text-decoration: none;
+  color: var(--dark-violet);
+}
+
+#no-acc a:hover {
+  color: var(--light-green);
+}
+
 @media (max-width: 768px) {
   form {
     margin: 2rem 1rem;

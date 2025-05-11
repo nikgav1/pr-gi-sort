@@ -21,9 +21,11 @@ export async function initializeNavAuth() {
       // Clear existing auth links
       const signinLink = document.getElementById('signin');
       const signupLink = document.getElementById('signup');
+      const existingProfileLink = document.getElementById('profile-link');
 
       if (signinLink) navDiv.removeChild(signinLink);
       if (signupLink) navDiv.removeChild(signupLink);
+      if (existingProfileLink) navDiv.removeChild(existingProfileLink);
 
       // Add profile link
       const profileLink = document.createElement('a');
@@ -39,6 +41,3 @@ export async function initializeNavAuth() {
     }
   }
 }
-
-// Auto-initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeNavAuth);
